@@ -38,7 +38,7 @@ function App() {
   }
 
   function deleteToDo(id: string) {
-    fetch(`http://localhost:3001/merchants/${id}`, {
+    fetch(`http://localhost:3001/todo/${id}`, {
       method: "DELETE",
     })
       .then((response) => {
