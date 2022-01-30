@@ -32,7 +32,7 @@ function App() {
         return response.text();
       })
       .then((data) => {
-        console.log(data);
+        console.log('DATA-----------', data);
         // >>>>>>>>>> setTodos
       });
   }
