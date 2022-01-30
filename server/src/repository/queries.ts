@@ -1,6 +1,6 @@
 import { DatabaseError } from "pg";
 import { pool } from "./db";
-import Filter from "../models/filter";
+import { Filter } from "../models/filter";
 import { Todo } from "../models/todo";
 
 const getToDos = (completed?: boolean) => {
