@@ -1,14 +1,11 @@
 version: "3.8"
 services:
-  app:
+  server:
     build: .
     depends_on:
       - postgres
     ports:
-      - "3001:3001"
-    volumes:
-      - "./:/usr/server/"
-      - "/usr/server/node_modules"
+      - "5001:5001"
 
   postgres:
     image: postgres:14.1-alpine

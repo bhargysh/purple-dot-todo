@@ -1,52 +1,53 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import "./App.css";
 import { v4 as uuidv4 } from "uuid";
+import axios from "axios";
 
 function App() {
   const [todos, setToDos] = useState([]);
-  const [filter, setFilter] = useState("");
+  const [filter, setFilter] = useState("SHOW_ALL");
   useEffect(() => {
     getToDos();
   }, [setFilter]);
+  const host = "http://localhost:5001/";
 
   function createToDo(description: string, completed = false) {
     const id = uuidv4();
-    fetch("http://localhost:3001/todo", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ id, description, completed }),
-    })
+    axios
+      .post(`${host}todo`, {
+        body: JSON.stringify({ id, description, completed }),
+      })
       .then((response) => {
-        return response.text();
+        console.debug("POST status:", response.status);
       })
       .then(() => {
         getToDos();
-      });
+      }).catch(e => console.error(`Cannot make POST request, following error is thrown ${e}`));
   }
 
   function getToDos() {
-    fetch(`http://localhost:3001/${filter}`)
+    axios
+      .get(`${host}${filter}`)
       .then((response) => {
-        return response.text();
+        console.log("RESPONSE >>>>>>>>", response.data);
+
+        return response.data;
       })
       .then((data) => {
-        console.log('DATA-----------', data);
-        // >>>>>>>>>> setTodos
-      });
+        console.log("DATA-----------", data);
+        setToDos(data);
+      }).catch(e => console.error(`Cannot make GET request, following error is thrown ${e}`));
   }
 
   function deleteToDo(id: string) {
-    fetch(`http://localhost:3001/todo/${id}`, {
-      method: "DELETE",
-    })
+    axios
+      .delete(`${host}todo/${id}`)
       .then((response) => {
-        return response.text();
+        console.debug("DELETE status:", response.status);
       })
       .then(() => {
         getToDos();
-      });
+      }).catch(e => console.error(`Cannot make DELETE request, following error is thrown ${e}`));
   }
   return (
     <div>
