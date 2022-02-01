@@ -45,8 +45,6 @@ function App() {
       .delete(`${host}todo/${id}`)
       .then((response) => {
         console.debug("DELETE status:", response.status);
-      })
-      .then(() => {
         getToDos();
       })
       .catch((e) =>
@@ -62,12 +60,12 @@ function App() {
   }
 
   return (
-    <div>
+    <div className="outer">
       <div>
         <form
           id="add-new-todo"
           onSubmit={(e: React.SyntheticEvent) => {
-            // e.preventDefault();
+            e.preventDefault();
             const target = e.target as typeof e.target & {
               text: { value: string };
             };
@@ -76,9 +74,9 @@ function App() {
           }}
         >
           <div>
-            <h2> Add Todo</h2>
+            <h1>Welcome to Bharg's Todo App 🎉</h1>
+            <h2>Add Todo ✏️</h2>
             <label>
-              Enter here:
               <input
                 type="text"
                 name="text"
@@ -87,9 +85,10 @@ function App() {
               />
             </label>
           </div>
+          <br />
           <div>
             <button type="submit" className="todo-submit-button">
-              Add Todo
+              Submit Todo
             </button>
           </div>
         </form>
@@ -97,7 +96,7 @@ function App() {
       <br />
 
       <div className="todos-list">
-        <h2>Current Todos:</h2>
+        <h2>Current Todos 👀</h2>
         {todos ? (
           todos.map(({ id, description, completed }) => (
             <div className="todo-completed" id={id} key={id}>
@@ -111,7 +110,7 @@ function App() {
                 {description}
               </label>
               <button id="delete-todo-btn" onClick={() => deleteToDo(id)}>
-                Delete ToDo
+                Delete Todo
               </button>
             </div>
           ))

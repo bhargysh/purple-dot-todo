@@ -3,12 +3,12 @@
 ## Running it
 
 ```bash
-cd client
-npm install & npm start
-
-# in another shell
 cd server
 docker-compose up --build
+
+# in another shell
+cd client
+npm install & npm start
 ```
 
 ## Accessing DB locally

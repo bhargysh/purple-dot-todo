@@ -1,3 +1,15 @@
-.App {
-  text-align: center;
+.outer {
+  margin: auto;
+  width: 50%;
+  padding: 10px;
+}
+
+#delete-todo-btn {
+  margin: 0.5em;
+}
+
+.filter-button-group {
+  display: flex;
+  flex-direction: row wrap;
+  justify-content: space-around;
 }
