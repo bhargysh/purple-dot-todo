@@ -9,7 +9,7 @@ function App() {
   useEffect(() => {
     getToDos();
   }, [setFilter]);
-  const host = "http://localhost:5001/";
+  const host = "http://localhost:3001/";
 
   function createToDo(description: string, completed = false) {
     const id = uuidv4();
@@ -22,21 +22,24 @@ function App() {
       })
       .then(() => {
         getToDos();
-      }).catch(e => console.error(`Cannot make POST request, following error is thrown ${e}`));
+      })
+      .catch((e) =>
+        console.error(
+          `Cannot make POST request, following error is thrown ${e}`
+        )
+      );
   }
 
   function getToDos() {
     axios
       .get(`${host}${filter}`)
       .then((response) => {
-        console.log("RESPONSE >>>>>>>>", response.data);
-
+        setToDos(response.data);
         return response.data;
       })
-      .then((data) => {
-        console.log("DATA-----------", data);
-        setToDos(data);
-      }).catch(e => console.error(`Cannot make GET request, following error is thrown ${e}`));
+      .catch((e) =>
+        console.error(`Cannot make GET request, following error is thrown ${e}`)
+      );
   }
 
   function deleteToDo(id: string) {
@@ -47,7 +50,12 @@ function App() {
       })
       .then(() => {
         getToDos();
-      }).catch(e => console.error(`Cannot make DELETE request, following error is thrown ${e}`));
+      })
+      .catch((e) =>
+        console.error(
+          `Cannot make DELETE request, following error is thrown ${e}`
+        )
+      );
   }
   return (
     <div>
@@ -72,24 +80,20 @@ function App() {
         <h2>Current Todos:</h2>
         {todos ? (
           todos.map(({ id, description, completed }) => (
-            <li className="todo">
-              <div className="todo-completed">
-                <input
-                  id={id}
-                  value={description}
-                  defaultChecked={completed}
-                  type="checkbox"
-                />
-                <label className="todo-description" htmlFor="todo-description">
-                  {description}
-                </label>
-              </div>
-              <div className="delete-todo">
-                <button id="delete-todo-btn" onClick={() => deleteToDo(id)}>
-                  Delete ToDo
-                </button>
-              </div>
-            </li>
+            <div className="todo-completed" id={id}>
+              <input
+                id={id}
+                value={description}
+                defaultChecked={completed}
+                type="checkbox"
+              />
+              <label className="todo-description" htmlFor="todo-description">
+                {description}
+              </label>
+              <button id="delete-todo-btn" onClick={() => deleteToDo(id)}>
+                Delete ToDo
+              </button>
+            </div>
           ))
         ) : (
           <p>No more Todos left!</p>

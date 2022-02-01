@@ -5,7 +5,9 @@ services:
     depends_on:
       - postgres
     ports:
-      - "5001:5001"
+      - "3001:3001"
+    volumes:
+      - .:/usr/server
 
   postgres:
     image: postgres:14.1-alpine

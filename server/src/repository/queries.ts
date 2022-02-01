@@ -5,16 +5,28 @@ import { Todo } from "../models/todo";
 
 const getToDos = (completed?: boolean) => {
   return new Promise(function (resolve, reject) {
-    let todoQuery;
     if (completed !== undefined)
-      todoQuery = `SELECT * FROM todos where completed=$1`;
-    else todoQuery = "SELECT * FROM todos";
-    pool.query(todoQuery, [completed], (error: DatabaseError, results: any) => {
-      if (error) {
-        reject(error);
-      }
-      resolve(results.rows);
-    });
+      pool.query(
+        "SELECT * FROM todos where completed=$1",
+        [completed],
+        (error: DatabaseError, results: any) => {
+          if (error) {
+            reject(error);
+          }
+          resolve(results.rows);
+        }
+      );
+    else {
+      pool.query(
+        "SELECT * FROM todos",
+        (error: DatabaseError, results: any) => {
+          if (error) {
+            reject(error);
+          }
+          resolve(results.rows);
+        }
+      );
+    }
   });
 };
 
