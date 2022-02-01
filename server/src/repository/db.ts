@@ -7,3 +7,5 @@ export const pool = new Pool({
   database: "dev",
   port: "5432",
 });
+
+// To access db locally: psql -h localhost -p 5432 -U bharg -d dev

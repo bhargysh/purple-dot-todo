@@ -42,16 +42,17 @@ const deleteToDos = () => {
 };
 
 export const createToDo = (details: Todo) => {
+
   return new Promise(function (resolve, reject) {
     const { id, description, completed } = details;
     pool.query(
-      "INSERT INTO merchants (id, description, completed) VALUES ($1, $2, $3) RETURNING *",
+      "INSERT INTO todos (id, description, completed) VALUES ($1, $2, $3)",
       [id, description, completed],
       (error: DatabaseError, results: any) => {
         if (error) {
           reject(error);
         }
-        resolve(`A new todo has been added: ${results.rows[0]}`);
+        resolve(`A new todo has been added: ${results}`);
       }
     );
   });

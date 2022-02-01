@@ -19,8 +19,6 @@ function App() {
       })
       .then((response) => {
         console.debug("POST status:", response.status);
-      })
-      .then(() => {
         getToDos();
       })
       .catch((e) =>
@@ -59,28 +57,44 @@ function App() {
   }
   return (
     <div>
-      <form
-        id="add-new-todo"
-        onSubmit={(event) => createToDo(event.currentTarget.value)}
-      >
-        <h2>Add a new todo:</h2>
-        <input
-          type="text"
-          id="new-todo-desc"
-          className="new-todo-desc"
-          name="todo description"
-        />
-        <button type="submit" className="todo-submit-button">
-          Add Todo
-        </button>
-      </form>
+      <div>
+        <form
+          id="add-new-todo"
+          onSubmit={(e: React.SyntheticEvent) => {
+            // e.preventDefault();
+            const target = e.target as typeof e.target & {
+              text: { value: string };
+            };
+            const desc = target.text.value;
+            createToDo(desc);
+          }}
+        >
+          <div>
+            <h2> Add Todo</h2>
+            <label>
+              Enter here:
+              <input
+                type="text"
+                name="text"
+                id="new-todo-desc"
+                className="new-todo-desc"
+              />
+            </label>
+          </div>
+          <div>
+            <button type="submit" className="todo-submit-button">
+              Add Todo
+            </button>
+          </div>
+        </form>
+      </div>
       <br />
 
       <div className="todos-list">
         <h2>Current Todos:</h2>
         {todos ? (
           todos.map(({ id, description, completed }) => (
-            <div className="todo-completed" id={id}>
+            <div className="todo-completed" id={id} key={id}>
               <input
                 id={id}
                 value={description}
