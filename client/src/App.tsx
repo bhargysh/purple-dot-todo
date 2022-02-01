@@ -8,7 +8,7 @@ function App() {
   const [filter, setFilter] = useState("SHOW_ALL");
   useEffect(() => {
     getToDos();
-  }, [setFilter]);
+  }, [filter]);
   const host = "http://localhost:3001/";
 
   function createToDo(description: string, completed = false) {
@@ -55,6 +55,12 @@ function App() {
         )
       );
   }
+
+  function onChangeFilter(filter: string) {
+    setFilter(filter);
+    getToDos();
+  }
+
   return (
     <div>
       <div>
@@ -120,7 +126,7 @@ function App() {
           type="button"
           className="show-all-todos-button"
           aria-pressed="true"
-          onClick={() => setFilter("SHOW_ALL")}
+          onClick={() => onChangeFilter("SHOW_ALL")}
         >
           Show All Todos
         </button>
@@ -129,7 +135,7 @@ function App() {
           type="button"
           className="show-completed-todos-button"
           aria-pressed="true"
-          onClick={() => setFilter("SHOW_COMPLETED")}
+          onClick={() => onChangeFilter("SHOW_COMPLETED")}
         >
           Show Completed Todos
         </button>
@@ -138,7 +144,7 @@ function App() {
           type="button"
           className="show-active-todos-button"
           aria-pressed="true"
-          onClick={() => setFilter("SHOW_ACTIVE")}
+          onClick={() => onChangeFilter("SHOW_ACTIVE")}
         >
           Show Active Todos
         </button>
@@ -147,7 +153,7 @@ function App() {
           type="button"
           className="clear-todos-button"
           aria-pressed="true"
-          onClick={() => setFilter("CLEAR_ALL")}
+          onClick={() => onChangeFilter("CLEAR_ALL")}
         >
           Clear All Todos
         </button>
